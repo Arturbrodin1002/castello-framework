@@ -9,6 +9,12 @@ class AccountCrudDb:
         return db.query(Account).filter_by(id=account_id).first()
 
     @staticmethod
+    def get_required_account_by_id(db: Session, account_id: int) -> Account:
+        account = AccountCrudDb.get_account_by_id(db, account_id)
+        assert account is not None, f"Счет с id={account_id} не найден в БД"
+        return account
+
+    @staticmethod
     def delete_account(db: Session, account_id: int) -> None:
         account = db.query(Account).filter_by(id=account_id).first()
         if account:

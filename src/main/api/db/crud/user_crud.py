@@ -9,6 +9,11 @@ class UserCrudDb:
     def get_user_by_username(db: Session, username: str) -> User | None:
         return db.query(User).filter_by(username=username).first()
 
+    @staticmethod
+    def get_required_user_by_username(db: Session, username: str) -> User:
+        user = UserCrudDb.get_user_by_username(db, username)
+        assert user is not None, f"Пользователь {username} не найден в БД"
+        return user
 
     @staticmethod
     def create_user(db: Session, create_user_request: CreateUserRequest) -> User:

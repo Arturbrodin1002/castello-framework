@@ -57,6 +57,7 @@ class CrudRequester(HttpRequester):
             allure.attachment_type.JSON
         )
 
+        self.response_spec(response)
         return response
 
 

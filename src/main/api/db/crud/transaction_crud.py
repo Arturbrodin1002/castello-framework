@@ -22,3 +22,21 @@ class TransactionCrudDb:
             query = query.filter_by(credit_id=credit_id)
 
         return query.order_by(Transaction.id.desc()).first()
+
+    @staticmethod
+    def get_required_last_transaction_by_type(
+            db: Session,
+            transaction_type: str,
+            to_account_id: int | None = None,
+            from_account_id: int | None = None,
+            credit_id: int | None = None
+    ) -> Transaction:
+        transaction = TransactionCrudDb.get_last_transaction_by_type(
+            db=db,
+            transaction_type=transaction_type,
+            to_account_id=to_account_id,
+            from_account_id=from_account_id,
+            credit_id=credit_id
+        )
+        assert transaction is not None, f"Транзакция типа {transaction_type} не найдена в БД"
+        return transaction
